@@ -66,10 +66,7 @@ bool Iemanja::validacao_caracteres_invalidos(){
 
 		//caso em que o caractere não seja nenhum dos caracteres validos
 		if(!caracter_valido){
-			this->codido_erro = 1;
-			this->erro_descricao = "Erro na expressão da linha " + 
-									to_string(this->linha) + " Caractere inválido (" 
-									+ this->expressao[i] + ") encontrado na posição " + to_string(i);	
+			codigo_erro_1(i);
 			return false;
 		}
 	}
@@ -145,10 +142,7 @@ bool Iemanja::validacao_formacao_numeros(){
 
 					//retorna para a seção de validações com erro caso contenha erros
 					if(contem_erros){
-						this->codido_erro = 2;
-						this->erro_descricao = "Erro na expressão da linha " + to_string(this->linha) 
-												+ " Numero inválido encontrado a partir da posição " 
-												+ to_string(indice_incial_numero);	
+						codigo_erro_2(indice_incial_numero);
 						return false;
 							
 					}
@@ -179,9 +173,7 @@ bool Iemanja::validacao_balanceamento_parenteses(){
 	}
 
 	if(!pilha_balanceamento_parentese->is_empty()){
-		this->codido_erro = 3;
-		this->erro_descricao = "Erro na expressão da linha " + to_string(this->linha) 
-								+ " os parênteses estão desbalanceados ";	
+		codigo_erro_3();
 		return false;
 	}
 
@@ -191,6 +183,27 @@ bool Iemanja::validacao_balanceamento_parenteses(){
 
 //fim validações
 
+//5 - codigos de erro
+void Iemanja::codigo_erro_1(int posicao){
+	this->codido_erro = 1;
+	this->erro_descricao = "Erro na expressão da linha " + 
+							to_string(this->linha) + " Caractere inválido (" 
+							+ this->expressao[posicao] + ") encontrado na posição " + to_string(posicao);
+}
+
+void Iemanja::codigo_erro_2(int indice_incial_numero){
+	this->codido_erro = 2;
+	this->erro_descricao = "Erro na expressão da linha " + to_string(this->linha) 
+							+ " Numero inválido encontrado a partir da posição " 
+							+ to_string(indice_incial_numero);	
+}
+
+void Iemanja::codigo_erro_3(){
+	this->codido_erro = 3;
+	this->erro_descricao = "Erro na expressão da linha " + to_string(this->linha) 
+							+ " os parênteses estão desbalanceados ";	
+}
+//fim codigos de erro
 
 void Iemanja::retirar_espacamento(){
 	//remove o espaçamento da expressao

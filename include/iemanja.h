@@ -30,6 +30,12 @@ public:
 	bool validacao_caracteres_invalidos(); //4.1
 	bool validacao_formacao_numeros(); //4.2
 	bool validacao_balanceamento_parenteses(); //4.3
+
+	//codigos de erro
+	void codigo_erro_1(int posicao);
+	void codigo_erro_2(int indice_incial_numero);
+	void codigo_erro_3();
+	void codigo_erro_4();
 	
 
 	//6 - extração das componentes internos

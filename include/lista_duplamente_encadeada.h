@@ -107,7 +107,7 @@ void LinkedList<T>::print() {
 
 template <typename T>
 void LinkedList<T>::remove(int index) {
-    if (index >= size) {
+    if (index >= size || index < 0) {
         throw std::out_of_range("Não existe elemento com este índice na lista.");
     }
 
@@ -145,7 +145,7 @@ int LinkedList<T>::length() {
 
 template <typename T>
 T LinkedList<T>::get_element(int index) {
-    if (index >= size) {
+    if (index >= size || index < 0) {
         throw std::out_of_range("Não existe elemento com este índice na lista.");
     }
 

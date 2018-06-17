@@ -26,7 +26,11 @@ bool Iemanja::validacoes(){
 	//execução das validações
 	if(validacao_caracteres_invalidos()){
 		if(validacao_formacao_numeros()){
-			cout << this->expressao << endl;
+			if(validacao_balanceamento_parenteses()){
+				cout << this->expressao << endl;
+			}else{
+				validado = false;
+			}
 		}else{
 			validado = false;
 		}
@@ -53,11 +57,13 @@ bool Iemanja::validacao_caracteres_invalidos(){
 	bool caracter_valido = false;
 	//for para a expressão
 	for(int i = 0; i < tamanho_expressao; i++){
+		caracter_valido = false;
 		//for para a os caracteres validos
 		for(int j = 0; j < (int)caracteres_validos.size(); j++){
 			if(this->expressao[i] == caracteres_validos[j])
 				caracter_valido = true;
 		}
+
 		//caso em que o caractere não seja nenhum dos caracteres validos
 		if(!caracter_valido){
 			this->codido_erro = 1;
@@ -70,7 +76,7 @@ bool Iemanja::validacao_caracteres_invalidos(){
 	return true;
 }
 
-//4.2 //erro
+//4.2 
 bool Iemanja::validacao_formacao_numeros(){
 	//verifica o tamanho da expressão
 	int tamanho_expressao = this->expressao.size();
@@ -154,6 +160,33 @@ bool Iemanja::validacao_formacao_numeros(){
 
 	return true;
 
+}
+
+//4.3 
+bool Iemanja::validacao_balanceamento_parenteses(){
+	//pilha para verificar o balanceamento de parênteses
+	Pilha<char> *pilha_balanceamento_parentese = new Pilha<char>;
+	//tamanho da expressao
+	int tamanho_expressao = this->expressao.size();
+
+	for(int i = 0; i < tamanho_expressao; i++){
+		//adiciona o parêntese na pilha caso seja encontrado
+		if(this->expressao[i] == '(')
+			pilha_balanceamento_parentese->push('(');
+		//retira o parênte da pilha
+		if(this->expressao[i] == ')')
+			pilha_balanceamento_parentese->pop();	
+	}
+
+	if(!pilha_balanceamento_parentese->is_empty()){
+		this->codido_erro = 3;
+		this->erro_descricao = "Erro na expressão da linha " + to_string(this->linha) 
+								+ " os parênteses estão desbalanceados ";	
+		return false;
+	}
+
+	return true;
+	
 }
 
 //fim validações

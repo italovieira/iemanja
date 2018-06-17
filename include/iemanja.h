@@ -1,4 +1,8 @@
+#ifndef IEMANJA_H_  /**< Verifica se a variável QUESTAO_3_INCLUDE_FILA_H_ foi definida*/
+#define IEMANJA_H_	 /**< Define a variável QUESTAO_3_INCLUDE_FILA_H_*/
+
 #include <string>
+#include "pilha.h"
 
 class Iemanja
 {
@@ -11,6 +15,7 @@ private:
 	int codido_erro;
 	//necessário para verificaçã dos erros - informa a descrição do erro
 	std::string erro_descricao;
+
 public:
 	//construtor parametrizado
 	Iemanja(std::string expressao_recebida, int linha);
@@ -24,9 +29,12 @@ public:
 	bool validacoes(); // 4
 	bool validacao_caracteres_invalidos(); //4.1
 	bool validacao_formacao_numeros(); //4.2
+	bool validacao_balanceamento_parenteses(); //4.3
 	
 
 	//6 - extração das componentes internos
 	void retirar_espacamento();
 	
 };
+
+#endif /* QUESTAO_3_INCLUDE_FILA_H_ */

@@ -27,7 +27,11 @@ bool Iemanja::validacoes(){
 	if(validacao_caracteres_invalidos()){
 		if(validacao_formacao_numeros()){
 			if(validacao_balanceamento_parenteses()){
-				cout << this->expressao << endl;
+				if(validacao_expressao_infixa()){
+					cout << this->expressao << endl;
+				}else{
+					validado = false;
+				}
 			}else{
 				validado = false;
 			}
@@ -181,6 +185,38 @@ bool Iemanja::validacao_balanceamento_parenteses(){
 	
 }
 
+//4.3 
+bool Iemanja::validacao_expressao_infixa() {
+	string operadores = "+-*/^";
+
+        size_t tamanho_expressao = this->expressao.length();
+	size_t found = -1;
+	size_t i = 0;
+
+        while (i != found) {
+            i = found + 1;
+
+		while (this->expressao[i] == ' '
+			   || this->expressao[i] == '('
+			   || this->expressao[i] == ')') {
+			i++;
+			found++;
+		}
+
+		found = this->expressao.find_first_of(operadores, i);
+		if (found == string::npos) {
+                    if (i < tamanho_expressao) {
+                        return true;
+                    }
+
+                    break;
+		}
+	}
+
+        codigo_erro_4();
+	return false;
+}
+
 //fim validações
 
 //5 - codigos de erro
@@ -194,7 +230,7 @@ void Iemanja::codigo_erro_1(int posicao){
 void Iemanja::codigo_erro_2(int indice_incial_numero){
 	this->codido_erro = 2;
 	this->erro_descricao = "Erro na expressão da linha " + to_string(this->linha) 
-							+ " Numero inválido encontrado a partir da posição " 
+							+ " Número inválido encontrado a partir da posição "
 							+ to_string(indice_incial_numero);	
 }
 
@@ -202,6 +238,12 @@ void Iemanja::codigo_erro_3(){
 	this->codido_erro = 3;
 	this->erro_descricao = "Erro na expressão da linha " + to_string(this->linha) 
 							+ " os parênteses estão desbalanceados ";	
+}
+
+void Iemanja::codigo_erro_4(){
+	this->codido_erro = 4;
+	this->erro_descricao = "Erro na expressão da linha " + to_string(this->linha)
+							+ " Expressão infixa malformada ";
 }
 //fim codigos de erro
 

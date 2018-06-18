@@ -30,6 +30,7 @@ public:
 	bool validacao_caracteres_invalidos(); //4.1
 	bool validacao_formacao_numeros(); //4.2
 	bool validacao_balanceamento_parenteses(); //4.3
+	bool validacao_expressao_infixa(); //4.4
 
 	//codigos de erro
 	void codigo_erro_1(int posicao);

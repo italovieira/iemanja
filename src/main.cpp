@@ -23,11 +23,8 @@ int main(){
 	//verifica se o arquivo foi aberto com sucesso
 	if (arquivo_expressoes.is_open()){
 		//verifica se ainda há linhas para leituras
-		while (!arquivo_expressoes.eof())
-		{
-		 //recupera a linha e adiciona na variavel de expressão 	
-		 getline (arquivo_expressoes, expressao);
-
+		//e recupera a linha e adiciona na variavel de expressão
+		while (getline(arquivo_expressoes, expressao)) {
 		 Iemanja * verificador_expressao = new Iemanja(expressao, linha);
 		 verificador_expressao->validacoes();
 

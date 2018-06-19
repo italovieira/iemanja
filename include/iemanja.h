@@ -17,6 +17,8 @@ private:
 	//necessário para verificaçã dos erros - informa a descrição do erro
 	std::string erro_descricao;
 
+        Fila<std::string> componentes;
+
 public:
 	//construtor parametrizado
 	Iemanja(std::string expressao_recebida, int linha);
@@ -39,7 +41,7 @@ public:
 	void codigo_erro_3();
 	void codigo_erro_4();
 	
-        Fila<std::string> * extracao_componentes();
+        void extrair_componentes();
 
 	//6 - extração das componentes internos
 	void retirar_espacamento();

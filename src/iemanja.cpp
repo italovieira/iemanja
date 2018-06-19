@@ -28,8 +28,9 @@ bool Iemanja::validacoes(){
 					&& validacao_expressao_infixa();
 
 	//verfica se a expressão está validada
-	if (validado)
+	if (validado){
 		cout << this->expressao << endl;
+	}
 	else{
 		cout << "código de erro " << this->codido_erro << " " << this->erro_descricao << endl;	
 	}
@@ -255,25 +256,25 @@ void Iemanja::retirar_espacamento(){
 	this->expressao.erase(remove(this->expressao.begin(), this->expressao.end(), ' '), this->expressao.end());
 }
 
-Fila<std::string> * Iemanja::extracao_componentes() {
+void Iemanja::extrair_componentes() {
     regex digitos("^[1-9]*.?[1-9]+");
     regex restante("^[*/+-^]");
     string expressao = this->expressao;
 
     string componente = "";
     smatch encontrado;
-    Fila<std::string> * fila = new Fila<std::string>;
+    Fila<std::string> componentes;
 
     while (!expressao.empty()) {
         if (regex_search(expressao, encontrado, digitos)
             || regex_search(expressao, encontrado, restante)) {
             componente = encontrado.str();
-            fila->enqueue(componente);
+            componentes.enqueue(componente);
             expressao = expressao.substr(encontrado.length() - 1);
         } else {
             break;
         }
     }
 
-    return fila;
+    this->componentes = componentes;
 }

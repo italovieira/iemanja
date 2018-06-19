@@ -17,7 +17,7 @@ private:
 	//necessário para verificaçã dos erros - informa a descrição do erro
 	std::string erro_descricao;
 
-        Fila<std::string> componentes;
+    Fila<std::string> * componentes;
 
 public:
 	//construtor parametrizado
@@ -35,16 +35,15 @@ public:
 	bool validacao_balanceamento_parenteses(); //4.3
 	bool validacao_expressao_infixa(); //4.4
 
-	//codigos de erro
+	//5 - codigos de erro
 	void codigo_erro_1(int posicao);
 	void codigo_erro_2(int indice_incial_numero);
 	void codigo_erro_3();
 	void codigo_erro_4();
-	
-        void extrair_componentes();
 
 	//6 - extração das componentes internos
 	void retirar_espacamento();
+	void extrair_componentes();
 	
 };
 

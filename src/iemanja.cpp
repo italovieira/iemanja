@@ -7,7 +7,9 @@
 
 using namespace std;
 
-Iemanja::Iemanja(std::string expressao_recebida, int linha):expressao(expressao_recebida), linha(linha){}
+Iemanja::Iemanja(std::string expressao_recebida, int linha):expressao(expressao_recebida), linha(linha){
+	this->componentes = new Fila<std::string>;
+}
 Iemanja::~Iemanja(){}
 
 std::string Iemanja::get_expressao(){
@@ -30,6 +32,12 @@ bool Iemanja::validacoes(){
 	//verfica se a expressão está validada
 	if (validado){
 		cout << this->expressao << endl;
+		//só para teste - adicionar isso no main
+		extrair_componentes();
+		while(!this->componentes->is_empty()){
+			cout << this->componentes->front() << endl;
+			this->componentes->dequeue();
+		}
 	}
 	else{
 		cout << "código de erro " << this->codido_erro << " " << this->erro_descricao << endl;	
@@ -263,18 +271,15 @@ void Iemanja::extrair_componentes() {
 
     string componente = "";
     smatch encontrado;
-    Fila<std::string> componentes;
 
     while (!expressao.empty()) {
         if (regex_search(expressao, encontrado, digitos)
             || regex_search(expressao, encontrado, restante)) {
             componente = encontrado.str();
-            componentes.enqueue(componente);
+            this->componentes->enqueue(componente);
             expressao = expressao.substr(encontrado.length());
         } else {
             break;
         }
     }
-
-    this->componentes = componentes;
 }

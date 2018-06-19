@@ -3,6 +3,7 @@
 
 #include <string>
 #include "pilha.h"
+#include "fila.h"
 
 class Iemanja
 {
@@ -38,6 +39,7 @@ public:
 	void codigo_erro_3();
 	void codigo_erro_4();
 	
+        Fila<std::string> * extracao_componentes();
 
 	//6 - extração das componentes internos
 	void retirar_espacamento();

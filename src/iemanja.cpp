@@ -1,4 +1,4 @@
-#include <iostream>
+
 #include <string>
 #include <cctype> /**< Inclusão da biblioteca cctype*/
 #include <algorithm> /**< Inclusão da biblioteca algorithm*/
@@ -187,12 +187,29 @@ bool Iemanja::validacao_balanceamento_parenteses(){
 
 //4.3 
 bool Iemanja::validacao_expressao_infixa() {
-	string operadores = "+-*/^";
-
+	string binarios = "*/^";
+        string unarios = "+-";
+	size_t found = 0;
+        this->retirar_espacamento();
         size_t tamanho_expressao = this->expressao.length();
-	size_t found = -1;
-	size_t i = 0;
 
+        char last = this->expressao.back();
+        if (last == '+' || last == '-') {
+            codigo_erro_4();
+            return false;
+        }
+
+        while (found != string::npos) {
+            found = this->expressao.find_first_of(unarios, found + 1);
+            char previous = this->expressao[found - 1];
+            if (previous == '+' || previous == '-') {
+                codigo_erro_4();
+                return false;
+            }
+        }
+
+	size_t i = 0;
+        found = -1;
         while (i != found) {
             i = found + 1;
 
@@ -203,7 +220,7 @@ bool Iemanja::validacao_expressao_infixa() {
 			found++;
 		}
 
-		found = this->expressao.find_first_of(operadores, i);
+		found = this->expressao.find_first_of(binarios, i);
 		if (found == string::npos) {
                     if (i < tamanho_expressao) {
                         return true;

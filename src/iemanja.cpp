@@ -21,25 +21,18 @@ int Iemanja::get_linha(){
 //4
 bool Iemanja::validacoes(){
 	//variavel de validação
-	bool validado = true;
+	bool validado = false;
 
 	//execução das validações
 	if(validacao_caracteres_invalidos()){
 		if(validacao_formacao_numeros()){
 			if(validacao_balanceamento_parenteses()){
 				if(validacao_expressao_infixa()){
+					validado = true;
 					cout << this->expressao << endl;
-				}else{
-					validado = false;
 				}
-			}else{
-				validado = false;
 			}
-		}else{
-			validado = false;
 		}
-	}else{
-		validado = false;
 	}
 	
 	//verfica se a expressão está validada

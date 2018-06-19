@@ -2,6 +2,7 @@
 #include <string>
 #include <cctype> /**< Inclusão da biblioteca cctype*/
 #include <algorithm> /**< Inclusão da biblioteca algorithm*/
+#include <regex>
 #include "../include/iemanja.h"
 
 using namespace std;
@@ -252,4 +253,27 @@ void Iemanja::codigo_erro_4(){
 void Iemanja::retirar_espacamento(){
 	//remove o espaçamento da expressao
 	this->expressao.erase(remove(this->expressao.begin(), this->expressao.end(), ' '), this->expressao.end());
+}
+
+Fila<std::string> * Iemanja::extracao_componentes() {
+    regex digitos("^[1-9]*.?[1-9]+");
+    regex restante("^[*/+-^]");
+    string expressao = this->expressao;
+
+    string componente = "";
+    smatch encontrado;
+    Fila<std::string> * fila = new Fila<std::string>;
+
+    while (!expressao.empty()) {
+        if (regex_search(expressao, encontrado, digitos)
+            || regex_search(expressao, encontrado, restante)) {
+            componente = encontrado.str();
+            fila->enqueue(componente);
+            expressao = expressao.substr(encontrado.length() - 1);
+        } else {
+            break;
+        }
+    }
+
+    return fila;
 }

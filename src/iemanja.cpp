@@ -257,7 +257,7 @@ void Iemanja::retirar_espacamento(){
 }
 
 void Iemanja::extrair_componentes() {
-    regex digitos("^[1-9]*.?[1-9]+");
+    regex digitos("^[1-9]*\\.?[1-9]+");
     regex restante("^[*/+-^]");
     string expressao = this->expressao;
 
@@ -270,7 +270,7 @@ void Iemanja::extrair_componentes() {
             || regex_search(expressao, encontrado, restante)) {
             componente = encontrado.str();
             componentes.enqueue(componente);
-            expressao = expressao.substr(encontrado.length() - 1);
+            expressao = expressao.substr(encontrado.length());
         } else {
             break;
         }

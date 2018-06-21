@@ -15,6 +15,7 @@ public:
     void dequeue();
 
     bool is_empty();
+    int size();
 };
 
 template <typename T>
@@ -43,6 +44,11 @@ T Fila<T>::front() {
 template <typename T>
 bool Fila<T>::is_empty() {
     return lista->is_empty();
+}
+
+template <typename T>
+int Fila<T>::size() {
+    return lista->length();
 }
 
 #endif

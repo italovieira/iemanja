@@ -16,8 +16,12 @@ private:
 	int codido_erro;
 	//necessário para verificaçã dos erros - informa a descrição do erro
 	std::string erro_descricao;
-
+	//fila para a extração dos componentes
     Fila<std::string> * componentes;
+    //fila convertida
+    Fila<std::string> * fila_expressao_convertida;
+    //Piha de operadores e parênteses
+    Pilha<std::string> * pilha_componentes_especiais;
 
 public:
 	//construtor parametrizado
@@ -44,6 +48,12 @@ public:
 	//6 - extração das componentes internos
 	void retirar_espacamento();
 	void extrair_componentes();
+
+	//7 - conversão
+	void converter_pos_fixa();
+	bool is_operando(std::string componente);
+	int buscar_precedencia(std::string operador);
+
 	
 };
 

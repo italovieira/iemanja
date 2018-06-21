@@ -26,7 +26,9 @@ int main(){
 		//e recupera a linha e adiciona na variavel de expressão
 		while (getline(arquivo_expressoes, expressao)) {
 		 Iemanja * verificador_expressao = new Iemanja(expressao, linha);
-		 verificador_expressao->validacoes();
+		 if(verificador_expressao->validacoes()){
+
+		 }
 
 		 //cout << verificador_expressao->get_linha() << endl;
 

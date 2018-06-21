@@ -9,6 +9,8 @@ using namespace std;
 
 Iemanja::Iemanja(std::string expressao_recebida, int linha):expressao(expressao_recebida), linha(linha){
 	this->componentes = new Fila<std::string>;
+	this->fila_expressao_convertida = new Fila<std::string>;
+	this->pilha_componentes_especiais = new Pilha<std::string>;
 }
 Iemanja::~Iemanja(){}
 
@@ -33,11 +35,17 @@ bool Iemanja::validacoes(){
 	if (validado){
 		cout << this->expressao << endl;
 		//só para teste - adicionar isso no main
+		
+		//caso de teste do momento, essa parte será adicionada no main
 		extrair_componentes();
-		while(!this->componentes->is_empty()){
-			cout << this->componentes->front() << endl;
-			this->componentes->dequeue();
+		converter_pos_fixa();
+	
+		while(!this->fila_expressao_convertida->is_empty()){
+			cout << this->fila_expressao_convertida->front() << endl;
+			this->fila_expressao_convertida->dequeue();
 		}
+		//______________________________________________
+
 	}
 	else{
 		cout << "código de erro " << this->codido_erro << " " << this->erro_descricao << endl;	
@@ -282,4 +290,72 @@ void Iemanja::extrair_componentes() {
             break;
         }
     }
+}
+
+void Iemanja::converter_pos_fixa(){
+	int precedencia_operador_atual;
+	//pecorre todos os componentes que foram extraidos
+	while(!this->componentes->is_empty()){
+		//verifica se o componente é um operando
+		if(is_operando(this->componentes->front())){
+			//cout << "SOu operando" << endl;
+			this->fila_expressao_convertida->enqueue(this->componentes->front());
+		}
+		//verifica se o componente é um parentese de abertura
+		else if(this->componentes->front() == "("){
+			//cout << "sou abertura de parêntese" << endl;
+			this->pilha_componentes_especiais->push(this->componentes->front());
+		}
+		//verifica se o componente é um parentese de fechamento
+		else if(this->componentes->front() == ")"){
+			//cout << "sou fechamento de parêntese" << endl;
+			while(this->pilha_componentes_especiais->top() != "("){
+				this->fila_expressao_convertida->enqueue(this->pilha_componentes_especiais->top());
+				this->pilha_componentes_especiais->pop();	
+			}
+			this->pilha_componentes_especiais->pop();
+		//verifica o caso que nega todos, ou seja, quando o componente for um operador	
+		}else{
+			//cout << "sou operador" << endl;
+			if(!this->pilha_componentes_especiais->is_empty()){
+				//busca a prescedencia do operador capturado
+				precedencia_operador_atual = buscar_precedencia(this->componentes->front());
+				//verifica se existe operadores como prescedencia maior ou igual na pilha de componentes especiais
+				while(precedencia_operador_atual <= buscar_precedencia(this->pilha_componentes_especiais->top())){
+					this->fila_expressao_convertida->enqueue(this->pilha_componentes_especiais->top());
+					this->pilha_componentes_especiais->pop();	
+
+					if(this->pilha_componentes_especiais->is_empty())
+						break;
+				}
+			}
+			this->pilha_componentes_especiais->push(this->componentes->front());
+
+		}	
+		this->componentes->dequeue();
+	}	
+	//adiciona na fila de expressão convertida todos os componentes especiais que sobraram na pilha
+	while(!this->pilha_componentes_especiais->is_empty()){
+		this->fila_expressao_convertida->enqueue(this->pilha_componentes_especiais->top());
+		this->pilha_componentes_especiais->pop();
+	}
+}
+
+bool Iemanja::is_operando(std::string componente){
+	string valores_numericos = "0123456789";
+	for(int i = 0; i < 10; i++){
+		if(componente[0] == valores_numericos[i])
+			return true;
+	}
+	return false;
+}
+
+int Iemanja::buscar_precedencia(std::string operador){
+	if(operador == "+" || operador == "-")
+		return 1;
+	else if(operador == "*" || operador == "/")
+		return 2;
+	else if(operador == "^")
+		return 3;
+    return 0;
 }

@@ -40,10 +40,12 @@ bool Iemanja::validacoes(){
 		extrair_componentes();
 		converter_pos_fixa();
 	
+		cout << "Formula pós-fixa ";
 		while(!this->fila_expressao_convertida->is_empty()){
-			cout << this->fila_expressao_convertida->front() << endl;
+			cout << this->fila_expressao_convertida->front() << " ";
 			this->fila_expressao_convertida->dequeue();
 		}
+		cout << endl;
 		//______________________________________________
 
 	}

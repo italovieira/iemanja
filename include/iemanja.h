@@ -22,6 +22,8 @@ private:
     Fila<std::string> * fila_expressao_convertida;
     //Piha de operadores e parênteses
     Pilha<std::string> * pilha_componentes_especiais;
+    //Resultado final após todo o processo
+    float resultado;
 
 public:
 	//construtor parametrizado
@@ -54,7 +56,9 @@ public:
 	bool is_operando(std::string componente);
 	int buscar_precedencia(std::string operador);
 
-	
+        //8 - avaliação
+	void avaliar_pos_fixa();
+	float realizar_calculo(std::string, float, float);
 };
 
 #endif /* QUESTAO_3_INCLUDE_FILA_H_ */

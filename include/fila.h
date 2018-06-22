@@ -12,7 +12,7 @@ public:
     ~Fila();
     T front();
     void enqueue(T item);
-    void dequeue();
+    T dequeue();
 
     bool is_empty();
     int size();
@@ -32,8 +32,12 @@ void Fila<T>::enqueue(T item) {
 }
 
 template <typename T>
-void Fila<T>::dequeue() {
-    lista->remove(lista->length() - 1);
+T Fila<T>::dequeue() {
+    int indice = lista->length() - 1;
+    T valor = lista->get_element(indice);
+    lista->remove(indice);
+
+    return valor;
 }
 
 template <typename T>

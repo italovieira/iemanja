@@ -1,6 +1,7 @@
 
 #include <string>
 #include <cctype> /**< Inclusão da biblioteca cctype*/
+#include <cmath>
 #include <algorithm> /**< Inclusão da biblioteca algorithm*/
 #include <regex>
 #include "../include/iemanja.h"
@@ -39,15 +40,15 @@ bool Iemanja::validacoes(){
 		//caso de teste do momento, essa parte será adicionada no main
 		extrair_componentes();
 		converter_pos_fixa();
+		avaliar_pos_fixa();
 	
-		cout << "Formula pós-fixa ";
-		while(!this->fila_expressao_convertida->is_empty()){
-			cout << this->fila_expressao_convertida->front() << " ";
-			this->fila_expressao_convertida->dequeue();
-		}
-		cout << endl;
-		//______________________________________________
-
+		//cout << "Formula pós-fixa ";
+		//while(!this->fila_expressao_convertida->is_empty()){
+		//	cout << this->fila_expressao_convertida->front() << " ";
+		//	//this->fila_expressao_convertida->dequeue();
+		//}
+		//cout << endl;
+		//
 	}
 	else{
 		cout << "código de erro " << this->codido_erro << " " << this->erro_descricao << endl;	
@@ -360,4 +361,39 @@ int Iemanja::buscar_precedencia(std::string operador){
 	else if(operador == "^")
 		return 3;
     return 0;
+}
+
+void Iemanja::avaliar_pos_fixa() {
+    Pilha<float> operandos;
+
+    while (!this->fila_expressao_convertida->is_empty()) {
+        string componente = this->fila_expressao_convertida->dequeue();
+
+        float novo_operando;
+        if (is_operando(componente)) {
+            novo_operando = stof(componente);
+        } else {
+            float operando1 = operandos.pop();
+            float operando2 = operandos.pop();
+
+            novo_operando = realizar_calculo(componente, operando1, operando2);
+        }
+        operandos.push(novo_operando);
+    }
+
+    this->resultado = operandos.pop();
+    std::cout << "Resultado: " << this->resultado << endl;
+}
+
+float Iemanja::realizar_calculo(string operador, float operando1, float operando2) {
+    if (operador == "+")
+        return operando1 + operando2;
+    else if (operador == "-")
+        return operando1 - operando2;
+    else if (operador == "*")
+        return operando1 * operando2;
+    else if (operador == "/")
+        return operando2 / operando1;
+    else
+        return pow(operando2, operando1);
 }

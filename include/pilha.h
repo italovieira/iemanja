@@ -30,7 +30,7 @@ public:
 	* @brief Método que retira o valor do topo da pilha
 	* @return 
 	*/
-	void pop();
+	T pop();
 	/**
 	* @brief Método que adiciona um novo valor no top da pilha
 	* @return 
@@ -69,8 +69,10 @@ inline void	 Pilha<T>::push(T caractere) {
 * @return booleano
 */
 template<typename T>
-inline void Pilha<T>::pop() {
+inline T Pilha<T>::pop() {
+        T valor = this->top();
 	this->lista_duplamente_encadeada->remove(0);
+        return valor;
 }
 
 /**

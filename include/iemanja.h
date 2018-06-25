@@ -33,6 +33,9 @@ public:
 	//getters e setters
 	std::string get_expressao();
 	int get_linha();
+	std::string get_erro_descricao();
+	int get_codido_erro();
+	float get_resultado();
 
 	// 4 - verificações
 	bool validacoes(); // 4
@@ -56,7 +59,7 @@ public:
 	bool is_operando(std::string componente);
 	int buscar_precedencia(std::string operador);
 
-        //8 - avaliação
+    //8 - avaliação
 	void avaliar_pos_fixa();
 	float realizar_calculo(std::string, float, float);
 };

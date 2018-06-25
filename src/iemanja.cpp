@@ -32,28 +32,6 @@ bool Iemanja::validacoes(){
 					&& validacao_balanceamento_parenteses()
 					&& validacao_expressao_infixa();
 
-	//verfica se a expressão está validada
-	if (validado){
-		cout << this->expressao << endl;
-		//só para teste - adicionar isso no main
-		
-		//caso de teste do momento, essa parte será adicionada no main
-		extrair_componentes();
-		converter_pos_fixa();
-		avaliar_pos_fixa();
-	
-		//cout << "Formula pós-fixa ";
-		//while(!this->fila_expressao_convertida->is_empty()){
-		//	cout << this->fila_expressao_convertida->front() << " ";
-		//	//this->fila_expressao_convertida->dequeue();
-		//}
-		//cout << endl;
-		//
-	}
-	else{
-		cout << "código de erro " << this->codido_erro << " " << this->erro_descricao << endl;	
-	}
-
 	return validado;
 }
 
@@ -382,18 +360,30 @@ void Iemanja::avaliar_pos_fixa() {
     }
 
     this->resultado = operandos.pop();
-    std::cout << "Resultado: " << this->resultado << endl;
+    //std::cout << "Resultado: " << this->resultado << endl;
 }
 
 float Iemanja::realizar_calculo(string operador, float operando1, float operando2) {
     if (operador == "+")
         return operando1 + operando2;
     else if (operador == "-")
-        return operando1 - operando2;
+        return operando2 - operando1;
     else if (operador == "*")
         return operando1 * operando2;
     else if (operador == "/")
         return operando2 / operando1;
     else
         return pow(operando2, operando1);
+}
+
+std::string Iemanja::get_erro_descricao(){
+	return this->erro_descricao;
+}
+
+int Iemanja::get_codido_erro(){
+	return this->codido_erro;
+}
+
+float Iemanja::get_resultado(){
+	return this->resultado;	
 }

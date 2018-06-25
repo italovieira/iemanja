@@ -27,7 +27,14 @@ int main(){
 		while (getline(arquivo_expressoes, expressao)) {
 		 Iemanja * verificador_expressao = new Iemanja(expressao, linha);
 		 if(verificador_expressao->validacoes()){
-
+		 	verificador_expressao->extrair_componentes();
+			verificador_expressao->converter_pos_fixa();
+			verificador_expressao->avaliar_pos_fixa();
+			std::cout << "Sucesso linha: "<< linha << " | Resultado: " << verificador_expressao->get_resultado() << endl;
+		 }else{
+		 	cout <<"Erro linha: " << linha << " | expressão: " << verificador_expressao->get_expressao()
+		 	<< " | código de erro " << verificador_expressao->get_codido_erro() 
+		 	<< " | " << verificador_expressao->get_erro_descricao() << endl;
 		 }
 
 		 //cout << verificador_expressao->get_linha() << endl;
